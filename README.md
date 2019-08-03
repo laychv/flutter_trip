@@ -1,16 +1,15 @@
-# flutter_trip
+#  flutter仿携程app
 
-A new Flutter application.
+## 1. 首页框架搭建
+- Scaffold
+ - PageView
+ - BottomNavigationBar
 
-## Getting Started
+## 2. 首页banner
+- flutter_swiper: ^1.1.6
 
-This project is a starting point for a Flutter application.
+## 3. 首页自定义appbar实现滚动监听
+Stack实现不同组件叠加
+NotificationListener监听滚动
+MediaQuery.removePadding(removeTop:true)适配刘海屏
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
