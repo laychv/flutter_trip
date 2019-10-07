@@ -13,6 +13,10 @@ dependencies:
   cupertino_icons: ^0.1.2
   # banner
   flutter_swiper: ^1.1.4
+  # http
+  http: ^0.12.0+1
+  # webview
+  flutter_webview_plugin: ^0.3.0+2
 
 dev_dependencies:
   flutter_test:
@@ -21,3 +25,18 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  assets:
+    - images/type_channelgroup.png
+    - images/type_channelgs.png
+    - images/type_channelplane.png
+    - images/type_channeltrain.png
+    - images/type_cruise.png
+    - images/type_district.png
+    - images/type_food.png
+    - images/type_hotel.png
+    - images/type_huodong.png
+    - images/type_shop.png
+    - images/type_sight.png
+    - images/type_ticket.png
+    - images/type_travelgroup.png

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trip/pages/HomePage.dart';
-import 'package:flutter_trip/pages/MinePage.dart';
-import 'package:flutter_trip/pages/SearchPage.dart';
-import 'package:flutter_trip/pages/TravelPage.dart';
+import 'package:flutter_trip/pages/home_page.dart';
+import 'package:flutter_trip/pages/mine_page.dart';
+import 'package:flutter_trip/pages/search_page.dart';
+import 'package:flutter_trip/pages/travel_page.dart';
 
 /*
  * 首页导航
@@ -23,8 +23,13 @@ class _TabNavigationState extends State<TabNavigation> {
     return Scaffold(
       body: PageView(
         controller: _controller,
-        children: <Widget>[HomePage(), SearchPage(), TravelPage(), MinePage()],
-        physics: NeverScrollableScrollPhysics(),// 禁止滑动
+        children: <Widget>[
+          HomePage(),
+          SearchPage(hideLeft: true),// 这里搜索不需要返回
+          TravelPage(),
+          MinePage()
+        ],
+        physics: NeverScrollableScrollPhysics(), // 禁止滑动
       ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
