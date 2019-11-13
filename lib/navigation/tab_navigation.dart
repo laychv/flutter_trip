@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trip/pages/home_page.dart';
-import 'package:flutter_trip/pages/mine_page.dart';
-import 'package:flutter_trip/pages/search_page.dart';
-import 'package:flutter_trip/pages/travel_page.dart';
+import 'package:flutter_trip/pages/home/home_page.dart';
+import 'package:flutter_trip/pages/mine/mine_page.dart';
+import 'package:flutter_trip/pages/search/search_page.dart';
+import 'package:flutter_trip/pages/travel/travel_tab_page.dart';
 
 /*
  * 首页导航
@@ -26,7 +26,7 @@ class _TabNavigationState extends State<TabNavigation> {
         children: <Widget>[
           HomePage(),
           SearchPage(hideLeft: true),// 这里搜索不需要返回
-          TravelPage(),
+          TravelTabPage(),
           MinePage()
         ],
         physics: NeverScrollableScrollPhysics(), // 禁止滑动

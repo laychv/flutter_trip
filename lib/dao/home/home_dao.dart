@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_trip/model/home_model.dart';
+import 'package:flutter_trip/model/home/home_model.dart';
 import 'package:http/http.dart' as http;
 
 ///通过as设置别名

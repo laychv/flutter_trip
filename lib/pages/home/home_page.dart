@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flutter_trip/dao/home_dao.dart';
-import 'package:flutter_trip/model/common_model.dart';
-import 'package:flutter_trip/model/grid_nav_model.dart';
-import 'package:flutter_trip/model/home_model.dart';
-import 'package:flutter_trip/model/sales_box_model.dart';
-import 'package:flutter_trip/pages/search_page.dart';
+import 'package:flutter_trip/dao/home/home_dao.dart';
+import 'package:flutter_trip/model/home/common_model.dart';
+import 'package:flutter_trip/model/home/grid_nav_model.dart';
+import 'package:flutter_trip/model/home/home_model.dart';
+import 'package:flutter_trip/model/home/sales_box_model.dart';
+import 'package:flutter_trip/pages/search/search_page.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/loading_container.dart';
 import 'package:flutter_trip/widget/loal_nav.dart';

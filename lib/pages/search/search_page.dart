@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trip/dao/search_dao.dart';
-import 'package:flutter_trip/model/search_model.dart';
+import 'package:flutter_trip/dao/search/search_dao.dart';
+import 'package:flutter_trip/model/search/search_model.dart';
 import 'package:flutter_trip/widget/search_bar.dart';
 import 'package:flutter_trip/widget/webview.dart';
 

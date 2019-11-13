@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trip/model/common_model.dart';
-import 'package:flutter_trip/model/grid_nav_model.dart';
+import 'package:flutter_trip/model/home/common_model.dart';
+import 'package:flutter_trip/model/home/grid_nav_model.dart';
 import 'package:flutter_trip/widget/webview.dart';
 
 /// 网络卡片 自定义组件
