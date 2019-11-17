@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trip/model/home/common_model.dart';
 import 'package:flutter_trip/model/home/sales_box_model.dart';
+import 'package:flutter_trip/util/NavigatorUtil.dart';
 import 'package:flutter_trip/widget/webview.dart';
 
 /// 底部卡片入口
@@ -29,7 +30,7 @@ class SalesBox extends StatelessWidget {
       children: <Widget>[
         Container(
           height: 44,
-          margin: EdgeInsets.only(left: 10,right: 10),
+          margin: EdgeInsets.only(left: 10, right: 10),
           decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(width: 1, color: Color(0xfff2f2f2)))),
@@ -48,14 +49,13 @@ class SalesBox extends StatelessWidget {
                         end: Alignment.centerRight)),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WebView(
-                            url: salesBox.moreUrl,
-                            title: "更多",
-                          ),
-                        ));
+                    NavigatorUtil.push(
+                      context,
+                      WebView(
+                        url: salesBox.moreUrl,
+                        title: "更多",
+                      ),
+                    );
                   },
                   child: Text(
                     '获取更多福利 >',
@@ -100,14 +100,13 @@ class SalesBox extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // 跳转到webview
-        Navigator.push(
+        NavigatorUtil.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => WebView(
-                      url: model.url,
-                      statusBarColor: model.statusBarColor,
-                      hideAppBar: model.hideAppBar,
-                    )));
+            WebView(
+              url: model.url,
+              statusBarColor: model.statusBarColor,
+              hideAppBar: model.hideAppBar,
+            ));
       },
       child: Container(
         decoration: BoxDecoration(

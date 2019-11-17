@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_trip/util/NavigatorUtil.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 const CATCH_URLS = ['m.ctrip.com/', 'm.ctrip.com/html5/', 'm.ctrip.com/html5'];
@@ -43,7 +44,7 @@ class _WebViewState extends State<WebView> {
           if (_isMain(changed.url) && !exiting) {
             if (widget.backForbid) {
             } else {
-              Navigator.pop(context);
+              NavigatorUtil.pop(context);
               exiting = true;
             }
           }
@@ -113,11 +114,11 @@ class _WebViewState extends State<WebView> {
       padding: EdgeInsets.fromLTRB(0, 40, 0, 10),
       child: FractionallySizedBox(
         widthFactor: 1, // 宽度充满
-        child: Stack(
+        child: Row(
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+                NavigatorUtil.pop(context);
               },
               child: Container(
                 margin: EdgeInsets.only(left: 10),
@@ -128,14 +129,14 @@ class _WebViewState extends State<WebView> {
                 ),
               ),
             ),
-            Positioned(
-              left: 0,
-              right: 0,
-              child: Center(
+            Container(
+              margin: EdgeInsets.only(left: 10),
                 child: Text(widget.title ?? '',
-                    style: TextStyle(color: backgroundColor, fontSize: 20)),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: backButtonColor, fontSize: 20)),
               ),
-            )
+//            )
           ],
         ),
       ),

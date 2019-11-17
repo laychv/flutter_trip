@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_trip/dao/travel/travel_item_dao.dart';
 import 'package:flutter_trip/model/travel/travel_item_model.dart';
+import 'package:flutter_trip/util/NavigatorUtil.dart';
 import 'package:flutter_trip/widget/loading_container.dart';
 import 'package:flutter_trip/widget/webview.dart';
 
@@ -42,7 +43,14 @@ class _TravelItemPageState extends State<TravelItemPage>
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         body: RefreshIndicator(
       onRefresh: _handleRefresh,
@@ -52,6 +60,7 @@ class _TravelItemPageState extends State<TravelItemPage>
             context: context,
             removeTop: true,
             child: StaggeredGridView.countBuilder(
+              controller: controller,
               crossAxisCount: 4,
               itemCount: travelItems?.length ?? 0,
               itemBuilder: (BuildContext context, int index) =>
@@ -63,7 +72,7 @@ class _TravelItemPageState extends State<TravelItemPage>
   }
 
   // 可选参数
-  _loadData({loadMore = false}) {
+  void _loadData({loadMore = false}) {
     if (loadMore) {
       pageIndex++;
     } else {
@@ -83,7 +92,7 @@ class _TravelItemPageState extends State<TravelItemPage>
         }
       });
     }).catchError((e) {
-        _isLoading = false;
+      _isLoading = false;
       print(e);
     });
   }
@@ -119,13 +128,12 @@ class _TravelItems extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (item.article.urls != null && item.article.urls.length > 0) {
-          Navigator.push(
+          NavigatorUtil.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => WebView(
-                        url: item.article.urls[0].h5Url,
-                        title: '详情',
-                      )));
+              WebView(
+                url: item.article.urls[0].h5Url,
+                title: item.article.author.nickName,// todo text 溢出问题
+              ));
         }
       },
       child: Card(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trip/model/home/common_model.dart';
 import 'package:flutter_trip/model/home/grid_nav_model.dart';
+import 'package:flutter_trip/util/NavigatorUtil.dart';
 import 'package:flutter_trip/widget/webview.dart';
 
 /// 网络卡片 自定义组件
@@ -62,7 +63,7 @@ class GridNav extends StatelessWidget {
     return _wrapGesture(
         context,
         Stack(
-          alignment: AlignmentDirectional.topCenter,// 文字居中
+          alignment: AlignmentDirectional.topCenter, // 文字居中
           children: <Widget>[
             Image.network(
               model.icon,
@@ -83,8 +84,8 @@ class GridNav extends StatelessWidget {
         model);
   }
 
-  _doubleItem(BuildContext context, CommonModel topItem,
-      CommonModel bottomItem) {
+  _doubleItem(
+      BuildContext context, CommonModel topItem, CommonModel bottomItem) {
     return Column(
       children: <Widget>[
         Expanded(
@@ -123,15 +124,13 @@ class GridNav extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // 跳转到webview
-        Navigator.push(
+        NavigatorUtil.push(
             context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    WebView(
-                      url: model.url,
-                      statusBarColor: model.statusBarColor,
-                      hideAppBar: model.hideAppBar,
-                    )));
+            WebView(
+              url: model.url,
+              statusBarColor: model.statusBarColor,
+              hideAppBar: model.hideAppBar,
+            ));
       },
       child: widget,
     );

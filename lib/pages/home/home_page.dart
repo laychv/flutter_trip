@@ -6,6 +6,7 @@ import 'package:flutter_trip/model/home/grid_nav_model.dart';
 import 'package:flutter_trip/model/home/home_model.dart';
 import 'package:flutter_trip/model/home/sales_box_model.dart';
 import 'package:flutter_trip/pages/search/search_page.dart';
+import 'package:flutter_trip/util/NavigatorUtil.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/loading_container.dart';
 import 'package:flutter_trip/widget/loal_nav.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_trip/widget/sales_nav.dart';
 import 'package:flutter_trip/widget/search_bar.dart';
 import 'package:flutter_trip/widget/sub_nav.dart';
 import 'package:flutter_trip/widget/webview.dart';
+import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 
 /*
  * 首页
@@ -92,6 +94,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 //    loadData();
     handleRefresh();
+    FlutterSplashScreen.hide();
   }
 
   @override
@@ -139,14 +142,14 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    CommonModel banner = bannerList[index];
-                    return WebView(
-                      url: banner.url,
-                      title: banner.title,
-                      hideAppBar: banner.hideAppBar,
-                    );
-                  }));
+                  CommonModel banner = bannerList[index];
+                  NavigatorUtil.push(
+                      context,
+                      WebView(
+                        url: banner.url,
+                        title: banner.title,
+                        hideAppBar: banner.hideAppBar,
+                      ));
                 },
                 child: Image.network(
                   bannerList[index].icon,
