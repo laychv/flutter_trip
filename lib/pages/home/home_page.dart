@@ -14,7 +14,7 @@ import 'package:flutter_trip/widget/sales_nav.dart';
 import 'package:flutter_trip/widget/search_bar.dart';
 import 'package:flutter_trip/widget/sub_nav.dart';
 import 'package:flutter_trip/widget/webview.dart';
-import 'package:flutter_splash_screen/flutter_splash_screen.dart';
+// import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 
 /*
  * 首页
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 //    loadData();
     handleRefresh();
-    FlutterSplashScreen.hide();
+    // FlutterSplashScreen.hide();
   }
 
   @override

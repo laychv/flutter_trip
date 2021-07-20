@@ -11,7 +11,7 @@ class LocalNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 64,
+        height: 70,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(7))),

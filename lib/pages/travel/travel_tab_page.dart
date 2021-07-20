@@ -46,7 +46,7 @@ class _TravelTabPageState extends State<TravelTabPage>
       body: Column(
         children: <Widget>[
           Container(
-            color: Colors.white,
+            color: Colors.blue,
             padding: EdgeInsets.only(top: 30),
             child: TabBar(
                 controller: _controller,
