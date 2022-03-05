@@ -1,23 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum SearchBarType { home, normal, homeLight }
 
 /// 搜索栏
 class SearchBar extends StatefulWidget {
-  final bool enabled;
-  final bool hideLeft;
+  final bool? enabled;
+  final bool? hideLeft;
   final SearchBarType searchBarType;
-  final String hint;
-  final String defaultText;
-  final void Function() leftButtonClick;
-  final void Function() rightButtonClick;
-  final void Function() inputBoxClick;
-  final void Function() speakClick;
-  final ValueChanged<String> onChanged;
+  final String? hint;
+  final String? defaultText;
+  final void Function()? leftButtonClick;
+  final void Function()? rightButtonClick;
+  final void Function()? inputBoxClick;
+  final void Function()? speakClick;
+  final ValueChanged<String>? onChanged;
 
   const SearchBar(
-      {Key key,
+      {Key? key,
       this.enabled = true,
       this.hideLeft,
       this.searchBarType = SearchBarType.normal,
@@ -42,7 +41,7 @@ class _SearchBarState extends State<SearchBar> {
   void initState() {
     if (widget.defaultText != null) {
       setState(() {
-        _controller.text = widget.defaultText;
+        _controller.text = widget.defaultText!;
       });
     }
     super.initState();
@@ -68,7 +67,7 @@ class _SearchBarState extends State<SearchBar> {
                       : Icon(Icons.arrow_back_ios,
                           color: Colors.grey, size: 26),
                 ),
-                widget.leftButtonClick),
+                widget.leftButtonClick!),
             Expanded(
               flex: 1,
               child: _inputBox(),
@@ -79,7 +78,7 @@ class _SearchBarState extends State<SearchBar> {
                   child: Text('搜索',
                       style: TextStyle(color: Colors.blue, fontSize: 12)),
                 ),
-                widget.rightButtonClick),
+                widget.rightButtonClick!),
           ],
         ));
   }
@@ -137,11 +136,11 @@ class _SearchBarState extends State<SearchBar> {
                 : _wrapTap(
                     Container(
                       child: Text(
-                        widget.defaultText,
+                        widget.defaultText!,
                         style: TextStyle(fontSize: 13, color: Colors.grey),
                       ),
                     ),
-                    widget.inputBoxClick),
+                    widget.inputBoxClick!),
           ),
 
           /// 判断显示清除还是麦克风按钮
@@ -154,7 +153,7 @@ class _SearchBarState extends State<SearchBar> {
                         ? Colors.blue
                         : Colors.grey,
                   ),
-                  widget.speakClick)
+                  widget.speakClick!)
               : _wrapTap(
                   Icon(
                     Icons.clear,
@@ -182,7 +181,7 @@ class _SearchBarState extends State<SearchBar> {
       });
     }
     if (widget.onChanged != null) {
-      widget.onChanged(text);
+      widget.onChanged!(text);
     }
   }
 
@@ -208,7 +207,7 @@ class _SearchBarState extends State<SearchBar> {
                 ],
               ),
             ),
-            widget.leftButtonClick),
+            widget.leftButtonClick!),
         Expanded(
           flex: 1,
           child: _inputBox(),
@@ -222,7 +221,7 @@ class _SearchBarState extends State<SearchBar> {
                 size: 26,
               ),
             ),
-            widget.rightButtonClick),
+            widget.rightButtonClick!),
       ],
     ));
   }

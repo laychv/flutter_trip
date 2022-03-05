@@ -5,6 +5,7 @@ import 'package:flutter_trip/model/travel/travel_item_model.dart';
 import 'package:flutter_trip/util/NavigatorUtil.dart';
 import 'package:flutter_trip/widget/loading_container.dart';
 import 'package:flutter_trip/widget/webview.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 /// 旅拍
 const ITEM_URL =
@@ -12,12 +13,15 @@ const ITEM_URL =
 const PAGE_SIZE = 10;
 
 class TravelItemPage extends StatefulWidget {
-  final String travelUrl;
+  final String? travelUrl;
   final String groupChannelCode;
   final Map params;
 
   const TravelItemPage(
-      {Key key, this.travelUrl, this.groupChannelCode, this.params})
+      {Key? key,
+      this.travelUrl,
+      required this.groupChannelCode,
+      required this.params})
       : super(key: key);
 
   @override
@@ -26,7 +30,7 @@ class TravelItemPage extends StatefulWidget {
 
 class _TravelItemPageState extends State<TravelItemPage>
     with AutomaticKeepAliveClientMixin {
-  List<TravelItem> travelItems;
+  List<TravelItem> travelItems = [];
   int pageIndex = 1;
   bool _isLoading = true;
   ScrollController controller = ScrollController();
@@ -79,12 +83,12 @@ class _TravelItemPageState extends State<TravelItemPage>
       pageIndex = 1;
     }
 
-    TravelItemDao.fetch(widget.travelUrl ?? ITEM_URL, widget.params,
-            widget.groupChannelCode, pageIndex, PAGE_SIZE)
+    TravelItemDao.fetch(widget.travelUrl ?? ITEM_URL, widget.params!,
+            widget.groupChannelCode!, pageIndex, PAGE_SIZE)
         .then((TravelItemModel model) {
       _isLoading = false;
       setState(() {
-        List<TravelItem> items = _filterItems(model.resultList);
+        List<TravelItem> items = _filterItems(model.resultList!);
         if (travelItems != null) {
           travelItems.addAll(items);
         } else {
@@ -118,21 +122,23 @@ class _TravelItemPageState extends State<TravelItemPage>
 }
 
 class _TravelItems extends StatelessWidget {
-  final int index;
+  final int? index;
   final TravelItem item;
 
-  const _TravelItems({Key key, this.index, this.item}) : super(key: key);
+  const _TravelItems({Key? key, this.index, required this.item})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (item.article.urls != null && item.article.urls.length > 0) {
+        if (item.article.urls.length > 0) {
           NavigatorUtil.push(
               context,
-              WebView(
+              HiWebView(
                 url: item.article.urls[0].h5Url,
-                title: item.article.author.nickName,// todo text 溢出问题
+                // title: item.article.author!.nickName, // todo text 溢出问题
+                title: '详情',
               ));
         }
       },
@@ -142,7 +148,7 @@ class _TravelItems extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           child: Column(
             children: <Widget>[
-              _itemImage(),
+              _itemImage(context),
               Container(
                 padding: EdgeInsets.all(4),
                 child: Text(
@@ -160,10 +166,21 @@ class _TravelItems extends StatelessWidget {
     );
   }
 
-  _itemImage() {
+  _itemImage(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Stack(
       children: <Widget>[
-        Image.network(item.article.images[0].dynamicUrl),
+        // Image.network(item.article.images[0].dynamicUrl),
+        Container(
+          constraints: BoxConstraints(
+            minHeight: size.width / 2 - 10,
+          ),
+          child: FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            image: item.article.images[0].dynamicUrl,
+            fit: BoxFit.cover,
+          ),
+        ),
         Positioned(
           bottom: 8,
           left: 8,
@@ -201,9 +218,9 @@ class _TravelItems extends StatelessWidget {
   }
 
   String _poiName() {
-    return item.article.pois == null || item.article.pois.length == 0
+    return item.article.pois == null || item.article.pois?.length == 0
         ? '未知'
-        : item.article.pois[0].poiName ?? '未知';
+        : item.article.pois?[0].poiName ?? '未知';
   }
 
   _infoText() {
@@ -219,14 +236,14 @@ class _TravelItems extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
-                      item.article.author?.coverImage?.dynamicUrl,
+                      item.article.author?.coverImage?.dynamicUrl ?? "",
                       width: 24,
                       height: 24)),
               Container(
                   padding: EdgeInsets.all(5),
                   width: 90,
                   child: Text(
-                    item.article.author?.nickName,
+                    item.article.author?.nickName ?? "",
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.black87, fontSize: 14),
                   )),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trip/dao/search/search_dao.dart';
 import 'package:flutter_trip/model/search/search_model.dart';
+import 'package:flutter_trip/pages/home/home_page.dart';
 import 'package:flutter_trip/util/NavigatorUtil.dart';
 import 'package:flutter_trip/widget/search_bar.dart';
 import 'package:flutter_trip/widget/webview.dart';
@@ -25,13 +26,13 @@ const TYPES = [
 ];
 
 class SearchPage extends StatefulWidget {
-  final bool hideLeft;
-  final String searchUrl;
-  final String keyword;
-  final String hint;
+  final bool? hideLeft;
+  final String? searchUrl;
+  final String? keyword;
+  final String? hint;
 
   const SearchPage(
-      {Key key, this.hideLeft, this.searchUrl = URL, this.keyword, this.hint})
+      {Key? key, this.hideLeft, this.searchUrl = URL, this.keyword, this.hint})
       : super(key: key);
 
   @override
@@ -39,8 +40,8 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  SearchModel searchModel;
-  String keyword;
+  SearchModel? searchModel;
+  String? keyword;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +93,8 @@ class _SearchPageState extends State<SearchPage> {
       });
       return;
     }
-    String url = widget.searchUrl + text;
+    String url =
+        "${(HomePage.configModel?.searchUrl ?? widget.searchUrl)}$text";
     SearchDao.fetch(url, text).then((SearchModel model) {
       if (model.keyword == keyword) {
         setState(() {
@@ -118,15 +120,15 @@ class _SearchPageState extends State<SearchPage> {
         ));
   }
 
-  Widget _item(int position) {
-    if (searchModel == null || searchModel.data == null) return null;
-    SearchItem item = searchModel.data[position];
+  _item(int position) {
+    if (searchModel == null || searchModel?.data == null) return null;
+    SearchItem item = searchModel!.data![position];
     return GestureDetector(
       onTap: () {
         NavigatorUtil.push(
             context,
-            WebView(
-              url: item.url,
+            HiWebView(
+              url: item.url!,
               title: '详情',
             ));
       },
@@ -160,7 +162,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   /// 根据type,设置不同image
-  _typeImage(String type) {
+  _typeImage(String? type) {
     if (type == null) return 'images/type_travelgroup.png';
     String path = 'travelgroup';
     for (var value in TYPES) {
@@ -172,10 +174,10 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   /// 富文本
-  _title(SearchItem item) {
+  _title(SearchItem? item) {
     if (item == null) return null;
     List<TextSpan> spans = [];
-    spans.addAll(_keywordTextSpans(item.word, searchModel.keyword));
+    spans.addAll(_keywordTextSpans(item.word, searchModel!.keyword));
     spans.add(TextSpan(
       text: '' + (item.districtname ?? '') + '' + (item.zonename ?? ''),
       style: TextStyle(fontSize: 16, color: Colors.grey),
@@ -183,10 +185,10 @@ class _SearchPageState extends State<SearchPage> {
     return RichText(text: TextSpan(children: spans));
   }
 
-  _keywordTextSpans(String word, String keyword) {
+  _keywordTextSpans(String? word, String? keyword) {
     List<TextSpan> spans = [];
     if (word == null || word.length == 0) return spans;
-    List<String> arr = word.split(keyword);
+    List<String> arr = word.split(keyword!);
     TextStyle normalStyle = TextStyle(fontSize: 16, color: Colors.black87);
     TextStyle keywordStyle = TextStyle(fontSize: 16, color: Colors.orange);
     for (int i = 0; i < arr.length; i++) {

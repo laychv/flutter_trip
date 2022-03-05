@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
  */
 class ClickItem extends StatelessWidget {
   const ClickItem(
-      {Key key,
-      this.onTap,
-      @required this.title,
+      {Key? key,
+      required this.onTap,
+      required this.title,
       this.content: "",
       this.textAlign: TextAlign.start,
       this.maxLines: 1})
@@ -54,7 +54,7 @@ class ClickItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle
+                        .subtitle1!
                         .copyWith(fontSize: 14)),
               ),
             ),

@@ -12,14 +12,15 @@ class TravelTabPage extends StatefulWidget {
 // SingleTickerProviderStateMixin
 class _TravelTabPageState extends State<TravelTabPage>
     with TickerProviderStateMixin {
-  TabController _controller;
+  late TabController _controller;
   List<TravelTab> tabs = [];
-  TravelTabModel travelTabModel;
+  late TravelTabModel travelTabModel;
 
   @override
   void initState() {
     _controller = TabController(length: 0, vsync: this);
     TravelTabDao.fetch().then((TravelTabModel tabModel) {
+      tabModel.tabs.length;
       _controller = TabController(length: tabModel.tabs.length, vsync: this);
       setState(() {
         /// 初始化数据
@@ -72,9 +73,9 @@ class _TravelTabPageState extends State<TravelTabPage>
               controller: _controller,
               children: tabs.map((TravelTab tab) {
                 return TravelItemPage(
-                  travelUrl: travelTabModel.url,
+                  travelUrl: travelTabModel.url!,
                   groupChannelCode: tab.groupChannelCode,
-                  params: travelTabModel.params,
+                  params: travelTabModel.params!,
                 );
               }).toList(),
             ),

@@ -8,7 +8,7 @@ import 'package:flutter_trip/widget/webview.dart';
 class GridNav extends StatelessWidget {
   final GridNavModel gridNavModel;
 
-  const GridNav({Key key, this.gridNavModel}) : super(key: key);
+  const GridNav({Key? key, required this.gridNavModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class GridNav extends StatelessWidget {
           alignment: AlignmentDirectional.topCenter, // 文字居中
           children: <Widget>[
             Image.network(
-              model.icon,
+              model.icon!,
               fit: BoxFit.fill,
               height: 88,
               width: 121,
@@ -75,7 +75,7 @@ class GridNav extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: 11),
               child: Text(
-                model.title,
+                model.title!,
                 style: TextStyle(fontSize: 14, color: Colors.white),
               ),
             ),
@@ -111,7 +111,7 @@ class GridNav extends StatelessWidget {
             child: _wrapGesture(
                 context,
                 Text(
-                  model.title,
+                  model.title!,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 14, color: Colors.white),
                 ),
@@ -126,7 +126,7 @@ class GridNav extends StatelessWidget {
         // 跳转到webview
         NavigatorUtil.push(
             context,
-            WebView(
+            HiWebView(
               url: model.url,
               statusBarColor: model.statusBarColor,
               hideAppBar: model.hideAppBar,

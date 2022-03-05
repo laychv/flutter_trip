@@ -1,8 +1,8 @@
 /// 搜索model
 /// Search Model
 class SearchModel {
-  final List<SearchItem> data;
-  String keyword;
+  final List<SearchItem>? data;
+  String? keyword;
 
   SearchModel({this.data});
 
@@ -16,13 +16,13 @@ class SearchModel {
 
 ///  Search Item
 class SearchItem {
-  final String word;
-  final String type;
-  final String price;
-  final String star;
-  final String zonename;
-  final String districtname;
-  final String url;
+  final String? word;
+  final String? type;
+  final String? price;
+  final String? star;
+  final String? zonename;
+  final String? districtname;
+  final String? url;
 
   SearchItem(
       {this.word,

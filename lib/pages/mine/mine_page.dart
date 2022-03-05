@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_trip/widget/click_item.dart';
-import 'package:flutter_trip/widget/toast.dart';
 
 /// 我的 h5
 class MinePage extends StatefulWidget {
@@ -67,7 +65,7 @@ class _MinePageState extends State<MinePage> {
                         ),
                       )),
                   onPressed: () {
-                    CommToast.show(context: context, msg: "点击登陆了");
+                    // CommToast.show(context: context, msg: "点击登陆了");
                   },
                   child: Text(
                     "登陆",
@@ -80,7 +78,7 @@ class _MinePageState extends State<MinePage> {
               ),
               FlatButton(
                 onPressed: () {
-                  CommToast.show(context: context, msg: "点击注册了");
+                  // CommToast.show(context: context, msg: "点击注册了");
                 },
                 child: Text(
                   "注册",

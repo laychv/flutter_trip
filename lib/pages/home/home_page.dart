@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_trip/dao/home/home_dao.dart';
 import 'package:flutter_trip/model/home/common_model.dart';
+import 'package:flutter_trip/model/home/config_model.dart';
 import 'package:flutter_trip/model/home/grid_nav_model.dart';
 import 'package:flutter_trip/model/home/home_model.dart';
 import 'package:flutter_trip/model/home/sales_box_model.dart';
@@ -20,6 +21,8 @@ import 'package:flutter_trip/widget/webview.dart';
  * 首页
  */
 class HomePage extends StatefulWidget {
+  static ConfigModel? configModel;
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -31,9 +34,9 @@ class _HomePageState extends State<HomePage> {
   double appbarAlpha = 0;
   List<CommonModel> localNavList = [];
   List<CommonModel> subNavModel = [];
-  GridNavModel gridNavModel;
-  SalesBoxModel salesBoxModel;
   List<CommonModel> bannerList = [];
+  GridNavModel? gridNavModel;
+  SalesBoxModel? salesBoxModel;
   bool _loading = true;
 
   _onScroll(offset) {
@@ -53,11 +56,11 @@ class _HomePageState extends State<HomePage> {
   loadData() {
     HomeDao.fetch().then((result) {
       setState(() {
-        localNavList = result.localNavList;
+        localNavList = result.localNavList!;
         gridNavModel = result.gridNav;
-        subNavModel = result.subNavList;
+        subNavModel = result.subNavList!;
         salesBoxModel = result.salesBox;
-        bannerList = result.bannerList;
+        bannerList = result.bannerList!;
         _loading = false;
       });
     }).catchError((e) {
@@ -73,11 +76,12 @@ class _HomePageState extends State<HomePage> {
     try {
       HomeModel result = await HomeDao.fetch();
       setState(() {
-        localNavList = result.localNavList;
+        HomePage.configModel = result.config;
+        localNavList = result.localNavList!;
         gridNavModel = result.gridNav;
-        subNavModel = result.subNavList;
+        subNavModel = result.subNavList!;
         salesBoxModel = result.salesBox;
-        bannerList = result.bannerList;
+        bannerList = result.bannerList!;
         _loading = false;
       });
     } catch (e) {
@@ -145,14 +149,14 @@ class _HomePageState extends State<HomePage> {
                   CommonModel banner = bannerList[index];
                   NavigatorUtil.push(
                       context,
-                      WebView(
+                      HiWebView(
                         url: banner.url,
                         title: banner.title,
                         hideAppBar: banner.hideAppBar,
                       ));
                 },
                 child: Image.network(
-                  bannerList[index].icon,
+                  bannerList[index].icon!,
                   fit: BoxFit.fill,
                 ),
               );
@@ -166,7 +170,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
-          child: GridNav(gridNavModel: gridNavModel),
+          child: GridNav(gridNavModel: gridNavModel!),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
@@ -174,7 +178,7 @@ class _HomePageState extends State<HomePage> {
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
-          child: SalesBox(salesBox: salesBoxModel),
+          child: SalesBox(salesBox: salesBoxModel!),
         ),
       ],
     );

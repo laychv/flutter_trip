@@ -12,12 +12,12 @@ class HomeModel {
   final SalesBoxModel salesBox;
 
   HomeModel(
-      {this.gridNav,
-      this.salesBox,
-      this.config,
-      this.bannerList,
-      this.localNavList,
-      this.subNavList});
+      {required this.gridNav,
+      required this.salesBox,
+      required this.config,
+      required this.bannerList,
+      required this.localNavList,
+      required this.subNavList});
 
   factory HomeModel.fromJson(Map<String, dynamic> json) {
     var localNavListJson = json['localNavList'] as List;

@@ -9,7 +9,7 @@ import 'package:flutter_trip/widget/webview.dart';
 class SalesBox extends StatelessWidget {
   final SalesBoxModel salesBox;
 
-  const SalesBox({Key key, this.salesBox}) : super(key: key);
+  const SalesBox({Key? key, required this.salesBox}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class SalesBox extends StatelessWidget {
                   onTap: () {
                     NavigatorUtil.push(
                       context,
-                      WebView(
+                      HiWebView(
                         url: salesBox.moreUrl,
                         title: "更多",
                       ),
@@ -102,7 +102,7 @@ class SalesBox extends StatelessWidget {
         // 跳转到webview
         NavigatorUtil.push(
             context,
-            WebView(
+            HiWebView(
               url: model.url,
               statusBarColor: model.statusBarColor,
               hideAppBar: model.hideAppBar,
@@ -114,7 +114,7 @@ class SalesBox extends StatelessWidget {
               right: left ? borderSide : BorderSide.none,
               bottom: last ? BorderSide.none : borderSide),
         ),
-        child: Image.network(model.icon,
+        child: Image.network(model.icon!,
             fit: BoxFit.fill,
             width: MediaQuery.of(context).size.width / 2 - 10,
             height: big ? 129 : 80),

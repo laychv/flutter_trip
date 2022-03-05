@@ -53,10 +53,6 @@ class _TabNavigationState extends State<TabNavigation> {
     return BottomNavigationBarItem(
         icon: Icon(icon, color: _defaultColor),
         activeIcon: Icon(icon, color: _activeColor),
-        title: Text(
-          title,
-          style: TextStyle(
-              color: _currentIndex == index ? _activeColor : _defaultColor),
-        ));
+        label: title);
   }
 }

@@ -1,71 +1,41 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_trip/util/NavigatorUtil.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 const CATCH_URLS = ['m.ctrip.com/', 'm.ctrip.com/html5/', 'm.ctrip.com/html5'];
 
 /// webview
-class WebView extends StatefulWidget {
-  final String url;
-  final String statusBarColor;
-  final String title;
-  final bool hideAppBar;
+class HiWebView extends StatefulWidget {
+  String? url;
+  final String? statusBarColor;
+  final String? title;
+  final bool? hideAppBar;
   final bool backForbid;
 
-  const WebView(
+  HiWebView(
       {this.url,
       this.statusBarColor,
       this.title,
       this.hideAppBar,
-      this.backForbid = false});
+      this.backForbid = false}) {
+    if (url != null && url!.contains('ctrip.com')) {
+      url = url!.replaceAll("http://", 'https://');
+    }
+  }
 
   _WebViewState createState() => _WebViewState();
 }
 
-class _WebViewState extends State<WebView> {
-  final webviewReference = FlutterWebviewPlugin();
-  StreamSubscription<String> _onUrlChanged;
-  StreamSubscription<WebViewStateChanged> _onStateChanged;
-  StreamSubscription<WebViewHttpError> _httpError;
+class _WebViewState extends State<HiWebView> {
   bool exiting = false;
 
   @override
   void initState() {
     super.initState();
-    webviewReference.close();
-    _onUrlChanged = webviewReference.onUrlChanged.listen((String url) {});
-
-    _onStateChanged =
-        webviewReference.onStateChanged.listen((WebViewStateChanged changed) {
-      switch (changed.type) {
-        case WebViewState.startLoad:
-          if (_isMain(changed.url) && !exiting) {
-            if (widget.backForbid) {
-            } else {
-              NavigatorUtil.pop(context);
-              exiting = true;
-            }
-          }
-          break;
-        default:
-          break;
-      }
-
-      _httpError =
-          webviewReference.onHttpError.listen((WebViewHttpError error) {
-        print(error);
-      });
-    });
   }
 
   @override
   void dispose() {
-    _onUrlChanged.cancel();
-    _onStateChanged.cancel();
-    _httpError.cancel();
-    webviewReference.dispose();
     super.dispose();
   }
 
@@ -84,18 +54,18 @@ class _WebViewState extends State<WebView> {
           _appBar(
               Color(int.parse('0xff' + statusBarColorStr)), backButtonColor),
           Expanded(
-            child: WebviewScaffold(
-              url: widget.url,
-              withZoom: true,
-              withLocalStorage: true,
-              hidden: true,
-              initialChild: Container(
-                color: Colors.white,
-                child: Center(
-                  child: Text('Waiting...'),
-                ),
-              ),
-            ),
+            child: WebView(
+                initialUrl: widget.url,
+                javascriptMode: JavascriptMode.unrestricted,
+                navigationDelegate: (NavigationRequest request) {
+                  if (_isMain(request.url)) {
+                    print("blocking + $request");
+                    Navigator.pop(context);
+                    return NavigationDecision.prevent;
+                  }
+                  print("allowing + $request");
+                  return NavigationDecision.navigate;
+                }),
           ),
         ],
       ),
@@ -131,11 +101,11 @@ class _WebViewState extends State<WebView> {
             ),
             Container(
               margin: EdgeInsets.only(left: 10),
-                child: Text(widget.title ?? '',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: backButtonColor, fontSize: 20)),
-              ),
+              child: Text(widget.title ?? '',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: backButtonColor, fontSize: 20)),
+            ),
 //            )
           ],
         ),
@@ -143,7 +113,7 @@ class _WebViewState extends State<WebView> {
     );
   }
 
-  bool _isMain(String url) {
+  bool _isMain(String? url) {
     bool contain = false;
     for (final value in CATCH_URLS) {
       if (url?.endsWith(value) ?? false) {

@@ -158,7 +158,7 @@ public class MainActivity extends FlutterActivity {
 - flutter
 ```dart
 MaterialApp(
-    title:'Flutter旅行'// snapshot名字,
+    title:'flutter_trip'// snapshot名字,
     theme:'',
     home:'',
 )
@@ -166,4 +166,89 @@ MaterialApp(
 
 - 打包apk
   - 工具栏打包工具
-  - 命令：flutter build apk 
+  - 命令：flutter build apk
+
+## 空安全
+
+sdk支持空安全版本 >= 2.12.0
+
+```
+environment:
+  sdk: ">=2.12.0 <3.0.0" //sdk >=2.12.0表示开启空安全检查
+```
+
+### 空安全解决
+
+```
+required
+!
+?
+??
+```
+
+升级SDK后，iOS导致的问题及解决
+
+```
+The iOS Simulator deployment target 'IPHONEOS_DEPLOYMENT_TARGET' is set to 4.3,
+but the range of supported deployment target versions is 9.0 to 15.2.99. (in target 'Toast' from project 'Pods')
+```
+
+解决
+
+```
+post_install do |installer|
+ installer.pods_project.targets.each do |target|
+  target.build_configurations.each do |config|
+   config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+  end
+ end
+end
+```
+
+iOS端报错Flutter/Flutter.h' file not found，Flutter系统的头文件找不到
+解决方法：
+方法一：
+1.直接删除Podfile.lock文件
+2.flutter clean
+3.运行
+（此方法可解决大部分问题）
+
+方法二：
+1.从项目中删除ios / Flutter / Flutter.framework
+2.进入ios项目目录
+3.pod install 应该生成Flutter.framework
+
+运行
+方法三：
+1.flutter create .
+2.flutter pub cache repair
+3.cd ios
+4.pod init
+5.pod install
+（如果使用了很多三方插件并且进行了源码修改，此方法慎用～且github极其不稳定，很容易下次出错）
+
+方法四：
+1.rm iOS/Flutter/Flutter.podspec
+2.flutter clean
+3.运行
+(解决问题)
+
+如果以上方法都没有效果， 建议更新pod到最新
+
+
+或者另一种解决方案：
+删除 项目根目录/ios/Flutter/Flutter.framework
+执行命令
+
+flutter clean
+flutter pub get
+cd ios
+pod install
+
+### webview 找不到
+```
+Lexical or Preprocessor Issue (Xcode): 'Flutter/Flutter.h' file not found
+/Users/laychv/SDK/flutter/.pub-cache/hosted/pub.flutter-io.cn/webview_flutter_wkwebview-2.7.1/ios/Classes/FLTWKProgressionDelegate.h:4:8
+```
+
+“Lexical or Preprocessor Issue ‘*.h’ file not found”。

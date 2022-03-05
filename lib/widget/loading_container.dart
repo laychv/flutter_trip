@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// 自定义 加载进度条
@@ -8,18 +7,20 @@ class LoadingContainer extends StatelessWidget {
   final bool cover; // 是否覆盖在其他控件之上
 
   const LoadingContainer(
-      {Key key,
-      @required this.isLoading,
+      {Key? key,
+      required this.isLoading,
       this.cover = false,
-      @required this.child})
+      required this.child})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return !cover
-        ? !isLoading ? child : _loadingView
+        ? !isLoading
+            ? child
+            : _loadingView
         : Stack(
-            children: <Widget>[child, isLoading ? _loadingView : null],
+            children: <Widget>[child, isLoading ? _loadingView : Container()],
           );
   }
 

@@ -7,7 +7,7 @@ import 'package:flutter_trip/widget/webview.dart';
 class SubNav extends StatelessWidget {
   final List<CommonModel> subNavList;
 
-  const SubNav({Key key, this.subNavList}) : super(key: key);
+  const SubNav({Key? key, required this.subNavList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class SubNav extends StatelessWidget {
           // 跳转到webview
           NavigatorUtil.push(
               context,
-              WebView(
+              HiWebView(
                 url: model.url,
                 statusBarColor: model.statusBarColor,
                 hideAppBar: model.hideAppBar,
@@ -61,10 +61,10 @@ class SubNav extends StatelessWidget {
         },
         child: Column(
           children: <Widget>[
-            Image.network(model.icon, width: 18, height: 18),
+            Image.network(model.icon!, width: 18, height: 18),
             Padding(
                 padding: EdgeInsets.only(top: 5),
-                child: Text(model.title, style: TextStyle(fontSize: 12)))
+                child: Text(model.title!, style: TextStyle(fontSize: 12)))
           ],
         ),
       ),

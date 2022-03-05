@@ -6,7 +6,7 @@ import 'package:flutter_trip/widget/webview.dart';
 class LocalNav extends StatelessWidget {
   final List<CommonModel> localNavList;
 
-  const LocalNav({Key key, this.localNavList}) : super(key: key);
+  const LocalNav({Key? key, required this.localNavList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class LocalNav extends StatelessWidget {
         // 跳转到webview
         NavigatorUtil.push(
             context,
-            WebView(
+            HiWebView(
               url: model.url,
               statusBarColor: model.statusBarColor,
               hideAppBar: model.hideAppBar,
@@ -44,10 +44,10 @@ class LocalNav extends StatelessWidget {
       },
       child: Column(
         children: <Widget>[
-          Image.network(model.icon, width: 32, height: 32),
+          Image.network(model.icon!, width: 32, height: 32),
           Padding(
               padding: EdgeInsets.only(top: 5),
-              child: Text(model.title, style: TextStyle(fontSize: 12)))
+              child: Text(model.title!, style: TextStyle(fontSize: 12)))
         ],
       ),
     );
